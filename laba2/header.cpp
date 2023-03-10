@@ -341,10 +341,10 @@ void SKNF::print_binary_sknf()
     }
     sknf.erase(sknf.size() - 1);
     sknf += ")";
-    std::cout << "Binary sknf: " << sknf << "\n";
+    std::cout << "Decimal sknf: " << sknf << "\n";
 }
 
-void SKNF::print_secondary_sknf()
+void SKNF::print_decimal_sknf()
 {
     std::string sknf;
     sknf += "*(";
@@ -374,10 +374,10 @@ void SKNF::print_secondary_sknf()
     }
     sknf.erase(sknf.size() - 1);
     sknf += ")";
-    std::cout << "Secondary sknf: " << sknf << "\n";
+    std::cout << "Decimal sknf: " << sknf << "\n";
 }
 
-void SDNF::print_secondary_sdnf()
+void SDNF::print_decimal_sdnf()
 {
     std::string sdnf;
     sdnf += "+(";
@@ -407,5 +407,5 @@ void SDNF::print_secondary_sdnf()
     }
     sdnf.erase(sdnf.size() - 1);
     sdnf += ")";
-    std::cout << "Secondary sdnf: " << sdnf << "\n";
+    std::cout << "Decimal sdnf: " << sdnf << "\n";
 }

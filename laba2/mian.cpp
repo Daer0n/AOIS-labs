@@ -6,7 +6,6 @@
 
 int main()
 {
-    system("chcp 1251");
     TruthTable t;
     SKNF Sknf;
     SDNF Sdnf;
@@ -22,8 +21,8 @@ int main()
     SDNF::print_sdnf(sdnf);
     Sknf.print_binary_sknf();
     Sdnf.print_binary_sdnf();
-    Sknf.print_secondary_sknf();
-    Sdnf.print_secondary_sdnf();
+    Sknf.print_decimal_sknf();
+    Sdnf.print_decimal_sdnf();
     Sdnf.print_index();
     
     

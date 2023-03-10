@@ -45,7 +45,7 @@ public:
     std::string create_sknf();
     static void print_sknf(std::string sknf);
     void print_binary_sknf();
-    void print_secondary_sknf();
+    void print_decimal_sknf();
 
 };
 
@@ -55,6 +55,6 @@ public:
     std::string create_sdnf();
     static void print_sdnf(std::string sdnf);
     void print_binary_sdnf();
-    void print_secondary_sdnf();
+    void print_decimal_sdnf();
 
 };
