@@ -175,15 +175,15 @@ std::string SKNF::create_sknf()
         if (this->table[i].result == 0)
         {
             sknf += "(";
-            if (this->table[i].a == 1)
+            if (this->table[i].a == 0)
                 sknf += "!a+";
             else
                 sknf += "a+";
-            if (this->table[i].b == 1)
+            if (this->table[i].b == 0)
                 sknf += "!b+";
             else
                 sknf += "b+";
-            if (this->table[i].c == 1)
+            if (this->table[i].c == 0)
                 sknf += "!c";
             else
                 sknf += "c";
@@ -250,4 +250,162 @@ void TruthTable::print_table()
     for (size_t i = 0; i < SIZE; i++)
         std::cout << "|  " << this->table[i].result << "  ";
     std::cout << "|\n" << "---------------------------------------------------------\n\n";
+}
+
+void TruthTable::print_index()
+{
+    std::vector<int> nums;
+    int num;
+    for (size_t i = 0; i < SIZE; i++)
+        nums.push_back(this->table[i].result);
+    std::reverse(nums.begin(), nums.end());
+    num = direct_code_to_int(nums);
+    std::cout << "Index: " << num << "\n";
+}
+
+int TruthTable::direct_code_to_int(std::vector<int> nums)
+{
+    int number = 0;
+    std::reverse(nums.begin(), nums.end());
+    for (size_t i = 0; i < nums.size(); i++)
+        if (nums[i] == 1)
+            number += pow(2, i);
+    return number;
+}
+
+std::vector<int> TruthTable::int_to_direct_code(int number, int size)
+{
+    std::vector<int> nums;
+    int buf = 0;
+    int num = abs(number);
+    while (num) {
+        buf = num % 2;
+        nums.push_back(buf);
+        num /= 2;
+    }
+    int length = nums.size();
+    for (int i = 0; i < size - length; i++)
+        nums.push_back(0);
+    std::reverse(nums.begin(), nums.end());
+    if (number < 0)
+        nums[0] = 1;
+    return nums;
+}
+
+void SDNF::print_binary_sdnf()
+{
+    std::string sdnf;
+    sdnf += "+(";
+    for (size_t i = 0; i < SIZE; i++) {
+        if (this->table[i].result == 1) {
+            if (this->table[i].a)
+                sdnf += "1";
+            else 
+                sdnf += "0";
+            if (this->table[i].b)
+                sdnf += "1";
+            else
+                sdnf += "0";
+            if (this->table[i].c)
+                sdnf += "1";
+            else
+                sdnf += "0";
+            sdnf += ",";
+        }
+    }
+    sdnf.erase(sdnf.size() - 1);
+    sdnf += ")";
+    std::cout << "Binary sdnf: " << sdnf << "\n";
+}
+
+void SKNF::print_binary_sknf()
+{
+    std::string sknf;
+    sknf += "*(";
+    for (size_t i = 0; i < SIZE; i++) {
+        if (this->table[i].result == 0) {
+            if (this->table[i].a)
+                sknf += "1";
+            else
+                sknf += "0";
+            if (this->table[i].b)
+                sknf += "1";
+            else
+                sknf += "0";
+            if (this->table[i].c)
+                sknf += "1";
+            else
+                sknf += "0";
+            sknf += ",";
+        }
+    }
+    sknf.erase(sknf.size() - 1);
+    sknf += ")";
+    std::cout << "Binary sknf: " << sknf << "\n";
+}
+
+void SKNF::print_secondary_sknf()
+{
+    std::string sknf;
+    sknf += "*(";
+    for (size_t i = 0; i < SIZE; i++) {
+        if (this->table[i].result == 0) {
+            std::vector<int> nums;
+            int num;
+            if (this->table[i].a)
+                nums.push_back(1);
+            else
+                nums.push_back(0);
+            if (this->table[i].b)
+                nums.push_back(1);
+            else
+                nums.push_back(0);
+            if (this->table[i].c)
+                nums.push_back(1);
+            else
+                nums.push_back(0);
+            num = SKNF::direct_code_to_int(nums);
+            std::stringstream ss;
+            ss << num;
+            std::string str = ss.str();
+            sknf += str;
+            sknf += ",";
+        }
+    }
+    sknf.erase(sknf.size() - 1);
+    sknf += ")";
+    std::cout << "Secondary sknf: " << sknf << "\n";
+}
+
+void SDNF::print_secondary_sdnf()
+{
+    std::string sdnf;
+    sdnf += "+(";
+    for (size_t i = 0; i < SIZE; i++) {
+        if (this->table[i].result == 1) {
+            std::vector<int> nums;
+            int num;
+            if (this->table[i].a)
+                nums.push_back(1);
+            else
+                nums.push_back(0);
+            if (this->table[i].b)
+                nums.push_back(1);
+            else
+                nums.push_back(0);
+            if (this->table[i].c)
+                nums.push_back(1);
+            else
+                nums.push_back(0);
+            num = SDNF::direct_code_to_int(nums);
+            std::stringstream ss;
+            ss << num;
+            std::string str = ss.str();
+            sdnf += str;
+            sdnf += ",";
+        }
+    }
+    sdnf.erase(sdnf.size() - 1);
+    sdnf += ")";
+    std::cout << "Secondary sdnf: " << sdnf << "\n";
 }

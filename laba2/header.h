@@ -1,6 +1,8 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <sstream>
 
 #define SIZE 8
 
@@ -23,7 +25,9 @@ public:
     Set table[8];
     void run_truth_table(std::string expression);
     void print_table();
-
+    void print_index();
+    std::vector<int> int_to_direct_code(int number, int size);
+    int direct_code_to_int(std::vector<int> nums);
 private:
     void push_char(Stack*& top, char info);
     void push_bool(Stack*& top, bool info);
@@ -40,6 +44,8 @@ class SKNF : public TruthTable
 public:
     std::string create_sknf();
     static void print_sknf(std::string sknf);
+    void print_binary_sknf();
+    void print_secondary_sknf();
 
 };
 
@@ -48,5 +54,7 @@ class SDNF : public TruthTable
 public:
     std::string create_sdnf();
     static void print_sdnf(std::string sdnf);
+    void print_binary_sdnf();
+    void print_secondary_sdnf();
 
 };
