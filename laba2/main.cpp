@@ -23,10 +23,8 @@ int main()
     Sdnf.print_binary_sdnf();
     Sknf.print_decimal_sknf();
     Sdnf.print_decimal_sdnf();
-    Sdnf.print_index();
-    
-    
+    Sdnf.print_index(); 
 }
 
 // !((!b+c)*(!(!a*c)))
-// !(a+!b)+(a*c)
+// !(a+!b)*(a*c)

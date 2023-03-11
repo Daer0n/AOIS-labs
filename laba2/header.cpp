@@ -6,29 +6,29 @@ TruthTable::TruthTable()
     this->table[0].b = 0;
     this->table[0].c = 0;
 
-    this->table[1].a = 1;
+    this->table[1].a = 0;
     this->table[1].b = 0;
-    this->table[1].c = 0;
+    this->table[1].c = 1;
 
     this->table[2].a = 0;
     this->table[2].b = 1;
     this->table[2].c = 0;
 
     this->table[3].a = 0;
-    this->table[3].b = 0;
+    this->table[3].b = 1;
     this->table[3].c = 1;
 
     this->table[4].a = 1;
-    this->table[4].b = 1;
+    this->table[4].b = 0;
     this->table[4].c = 0;
 
-    this->table[5].a = 0;
-    this->table[5].b = 1;
+    this->table[5].a = 1;
+    this->table[5].b = 0;
     this->table[5].c = 1;
 
     this->table[6].a = 1;
-    this->table[6].b = 0;
-    this->table[6].c = 1;
+    this->table[6].b = 1;
+    this->table[6].c = 0;
 
     this->table[7].a = 1;
     this->table[7].b = 1;
@@ -90,32 +90,32 @@ std::string TruthTable::translate_to_opz(std::string expression)
 {
     std::string result;
     Stack* top = NULL;
-    char temp;
+    char element;
     for (size_t i = 0; i < expression.size(); i++) {
         if (expression[i] == '(')
             push_char(top, expression[i]);
         else if (expression[i] == ')') {
             while (top->info != '(')
             {
-                pop_char(top, &temp);
-                result += temp;
+                pop_char(top, &element);
+                result += element;
             }
-            pop_char(top, &temp);
+            pop_char(top, &element);
         }
         else if (expression[i] >= 'a' and expression[i] <= 'c')
             result += expression[i];
         else if (expression[i] == '*' or expression[i] == '+' or expression[i] == '!') {
             while (top != NULL and prior(top->info) >= prior(expression[i]))
             {
-                pop_char(top, &temp);
-                result += temp;
+                pop_char(top, &element);
+                result += element;
             }
             push_char(top, expression[i]);
         }
     }
     while (top != NULL) {
-        pop_char(top, &temp);
-        result += temp;
+        pop_char(top, &element);
+        result += element;
     }
     return result;
 }
@@ -266,7 +266,6 @@ void TruthTable::print_index()
     int num;
     for (size_t i = 0; i < SIZE; i++)
         nums.push_back(this->table[i].result);
-    std::reverse(nums.begin(), nums.end());
     num = direct_code_to_int(nums);
     std::cout << "Index: " << num << "\n";
 }
@@ -284,11 +283,9 @@ int TruthTable::direct_code_to_int(std::vector<int> nums)
 std::vector<int> TruthTable::int_to_direct_code(int number, int size)
 {
     std::vector<int> nums;
-    int buf = 0;
     int num = abs(number);
     while (num) {
-        buf = num % 2;
-        nums.push_back(buf);
+        nums.push_back(num & 2);
         num /= 2;
     }
     int length = nums.size();
