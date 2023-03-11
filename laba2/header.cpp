@@ -176,23 +176,27 @@ std::string SKNF::create_sknf()
         {
             sknf += "(";
             if (this->table[i].a == 0)
-                sknf += "!a+";
-            else
                 sknf += "a+";
+            else
+                sknf += "!a+";
             if (this->table[i].b == 0)
-                sknf += "!b+";
-            else
                 sknf += "b+";
-            if (this->table[i].c == 0)
-                sknf += "!c";
             else
+                sknf += "!b+";
+            if (this->table[i].c == 0)
                 sknf += "c";
+            else
+                sknf += "!c";
             sknf += ")";
             sknf += "*";
         }
     }
-    sknf.erase(sknf.size() - 1);
-    return sknf;
+    if (sknf.size() >= 1) {
+        sknf.erase(sknf.size() - 1);
+        return sknf;
+    }
+    else 
+        return "does not exist";
 }
 
 std::string SDNF::create_sdnf()
@@ -215,8 +219,12 @@ std::string SDNF::create_sdnf()
             sdnf += "+";
         }
     }
-    sdnf.erase(sdnf.size() - 1);
-    return sdnf;
+    if (sdnf.size()) {
+        sdnf.erase(sdnf.size() - 1);
+        return sdnf;
+    }
+    else
+        return "does not exist";
 }
 
 void SDNF::print_sdnf(std::string sdnf)
@@ -315,7 +323,10 @@ void SDNF::print_binary_sdnf()
     }
     sdnf.erase(sdnf.size() - 1);
     sdnf += ")";
-    std::cout << "Binary sdnf: " << sdnf << "\n";
+    if (sdnf.size() > 3)
+        std::cout << "Binary sdnf: " << sdnf << "\n";
+    else
+        std::cout << "Binary sdnf: does not exist\n";
 }
 
 void SKNF::print_binary_sknf()
@@ -341,7 +352,10 @@ void SKNF::print_binary_sknf()
     }
     sknf.erase(sknf.size() - 1);
     sknf += ")";
-    std::cout << "Decimal sknf: " << sknf << "\n";
+    if(sknf.size() > 3)
+        std::cout << "Binary sknf: " << sknf << "\n";
+    else 
+        std::cout << "Binary sknf: does not exist\n";
 }
 
 void SKNF::print_decimal_sknf()
@@ -374,7 +388,10 @@ void SKNF::print_decimal_sknf()
     }
     sknf.erase(sknf.size() - 1);
     sknf += ")";
-    std::cout << "Decimal sknf: " << sknf << "\n";
+    if (sknf.size() > 3)
+        std::cout << "Decimal sknf: " << sknf << "\n";
+    else
+        std::cout << "Decimal sknf: does not exist\n";
 }
 
 void SDNF::print_decimal_sdnf()
@@ -407,5 +424,8 @@ void SDNF::print_decimal_sdnf()
     }
     sdnf.erase(sdnf.size() - 1);
     sdnf += ")";
-    std::cout << "Decimal sdnf: " << sdnf << "\n";
+    if (sdnf.size() > 3)
+        std::cout << "Decimal sdnf: " << sdnf << "\n";
+    else
+        std::cout << "Decimal sdnf: does not exist\n";
 }
